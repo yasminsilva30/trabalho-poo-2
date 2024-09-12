@@ -26,6 +26,8 @@ class Cliente {
     }
 
     public String visualizarCliente() {
-        return "Nome: " + nome + ", Endereço: " + endereco + ", Telefone: " + telefone;
+    return "Nome: " + nome + "\n" +
+           "Endereço: " + endereco + "\n" +
+           "Telefone: " + telefone + "\n";
     }
 }
