@@ -20,14 +20,16 @@ class Pedido {
 
     public void adicionarItem(ItemMenu item) {
         if (itemCount == MAX_ITENS) {
-            System.out.println("Não é possível adicionar mais itens. O pedido já contém o máximo de itens permitido.");
+            System.out.println("Não é possível adicionar mais itens :( O pedido já contém o máximo de itens permitido...");
             return;
-        }
-        if (itemCount == 0) {
-            status = "Em preparação";
         }
         itens[itemCount++] = item;
         calcularTotal();
+        
+        if (itemCount == 1) {
+            atualizarStatus();
+            System.out.println("Status do pedido: " + status);
+        }
     }
 
     private void calcularTotal() {
@@ -41,22 +43,37 @@ class Pedido {
         return total;
     }
 
+    public int getItemCount() {
+        return itemCount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     public void finalizarPedido() {
         status = "Pronto para entrega";
     }
 
     public String visualizarPedido() {
         StringBuilder detalhes = new StringBuilder();
-        detalhes.append("Cliente: ").append(cliente.getNome()).append("\n");
-        detalhes.append("Status: ").append(status).append("\n");
+        detalhes.append(cliente.visualizarCliente()).append("\n");
         detalhes.append("Itens:\n");
 
         for (int i = 0; i < itemCount; i++) {
             detalhes.append(itens[i].getDetalhesItem()).append("\n");
         }
 
-        detalhes.append("Total: R$ ").append(String.format("%.2f", total)).append("\n");
+        if (itemCount > 1) {
+            detalhes.append("Total: R$ ").append(String.format("%.2f", total)).append("\n");
+        }
+
+        detalhes.append("Status: ").append(status).append("\n");
 
         return detalhes.toString();
+    }
+
+    private void atualizarStatus() {
+        status = "Em preparação";
     }
 }
